@@ -1,3 +1,4 @@
 # ignore the following files from git repo
 
 deploy.sh
+*.wav

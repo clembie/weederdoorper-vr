@@ -1,16 +1,118 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
-  </body>
-</html>
+    <head>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="https://datavized.github.io/aframe-ambisonic-component/aframe-ambisonic-component.js"></script>
+        <script src="https://datavized.github.io/aframe-ambisonic-component/scripts/play-on-window-click.js"></script>
+        <script src="https://datavized.github.io/aframe-ambisonic-component/scripts/hide-once-playing.js"></script>
+        <script src="https://datavized.github.io/aframe-ambisonic-component/scripts/play-on-vrdisplayactivate-or-enter-vr.js"></script>
 
+    </head>
+    <body>
+        <a-scene>
+            <a-assets>
+                <audio id="audio_amb" src="assets/trees_test_b16.wav"></audio>
+                <img id="dark_sky" src="assets/dark-sky3.jpg"></img>
+                <img id="damoon" src="assets/moon.jpg"></img>
+                <img id="sand-albedo" src="assets/textures/sand/ground_sand_albedo.jpg"></img>
+                <img id="sand-ao" src="assets/textures/sand/ground_sand_ao.jpg"></img>
+                <img id="sand-normal" src="assets/textures/sand/ground_sand_normal.jpg"></img>
+            </a-assets>
+
+          <!-- SKY -->
+          <a-sky
+            id="dark-sky"
+            src="#dark_sky">
+          </a-sky>
+
+          <!-- DEFAULT LIGHTING -->
+          <!-- Ambient light -->
+          <a-entity
+            id="amb-light"
+            light="type: ambient;
+                  color=: #BBB">
+          </a-entity>
+          <!-- directional light -->
+          <a-entity
+            id="dir-light" light="angle: 45"
+            light="type: directional;
+                  color: #FFFFFF;
+                  intensity: 0.4;
+                  castShadow: true"
+            position="-0.5 1 1">
+          </a-entity>
+
+          <a-ambisonic
+            id="ambisonic"
+            src="#audio_amb"
+            play-on-window-click
+            play-on-vrdisplayactivate-or-enter-vr
+            use-media-element="false">
+          </a-ambisonic>
+
+          <a-curvedimage
+            id="m_moon" rotation="45 135 0" scale="50 50 50" geometry="radius: 0.707"
+            src="#damoon"
+            theta-length="90"
+            theta-start="135"
+            radius="2"
+            position="-122.46141 250 250">
+          </a-curvedimage>
+
+          <a-box
+            id="m_box"
+            position="-2 1.5 -3"
+            rotation="0 45 0"
+            color="#4CC3D9">
+          </a-box>
+
+          <a-sphere
+            id="m_sph"
+            position="0 1.25 -5"
+            radius="1.25"
+            color="#EF2D5E"
+            side="double">
+          </a-sphere>
+
+          <a-cylinder
+            id="m_cyl"
+            position="1 3 -3"
+            radius="0.5"
+            height="1.5"
+            color="#FFC65D">
+          </a-cylinder>
+
+          <a-plane
+            id="ground"
+            material="color: #967c5c;
+                      src: #sand-albedo;
+                      repeat: 1000 1000;
+                      normal-map: #sand-normal;
+                      normal-texture-repeat: 1000 1000;
+                      normal-scale: 1 -1;
+                      ambient-occlusion-map: #sand-ao;
+                      ambient-occulsion-map-intensity: 1;
+                      ambient-occlusion-map-texture-repeat: 1000 1000"
+            roughness="0.6"
+            width="1"
+            height="1"
+            position="0 0 -4"
+            rotation="-90 0 0"
+            scale="1000 1000 1000">
+          </a-plane>
+
+          <a-camera
+            id="cam">
+    				<!-- Text element for display messaging.  Hide once audio is playing. -->
+    				<a-entity id="msg" position="0 -0.3 -1.5" text="align:center;
+    					width:3;
+    					wrapCount:100;
+    					color:white;
+    					value:Click window to make audio play."
+    					hide-once-playing="#ambisonic">
+    				</a-entity>
+    			</a-camera>
+
+        </a-scene>
+      </body>
+</html>
