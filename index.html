@@ -17,6 +17,7 @@
                 <img id="sand-albedo" src="assets/textures/sand/ground_sand_albedo.jpg"></img>
                 <img id="sand-ao" src="assets/textures/sand/ground_sand_ao.jpg"></img>
                 <img id="sand-normal" src="assets/textures/sand/ground_sand_normal.jpg"></img>
+                <a-asset-item id="gnarly-trees" src="assets/models/gnarly_trees_comp/scene.gltf"></a-asset-item>
             </a-assets>
 
           <!-- SKY -->
@@ -51,14 +52,15 @@
           </a-ambisonic>
 
           <a-curvedimage
-            id="m_moon" rotation="45 135 0" scale="50 50 50" geometry="radius: 0.707"
+            id="m_moon" rotation="45 135 0" scale="100 100 100" geometry="radius: 0.707"
             src="#damoon"
             theta-length="90"
             theta-start="135"
             radius="2"
             position="-122.46141 250 250">
           </a-curvedimage>
-
+          
+          <!--
           <a-box
             id="m_box"
             position="-2 1.5 -3"
@@ -81,6 +83,15 @@
             height="1.5"
             color="#FFC65D">
           </a-cylinder>
+          -->
+
+          <a-entity 
+            id="trees"
+            gltf-model="#gnarly-trees"
+            scale="0.01 0.01 0.01"
+            position="-29.33 0.913 63.377"
+            rotation="0 -65.81 0">
+          </a-entity>
 
           <a-plane
             id="ground"
@@ -101,17 +112,36 @@
             scale="1000 1000 1000">
           </a-plane>
 
-          <a-camera
-            id="cam">
-    				<!-- Text element for display messaging.  Hide once audio is playing. -->
-    				<a-entity id="msg" position="0 -0.3 -1.5" text="align:center;
-    					width:3;
-    					wrapCount:100;
-    					color:white;
-    					value:Click window to make audio play."
-    					hide-once-playing="#ambisonic">
-    				</a-entity>
-    			</a-camera>
+          <a-entity
+            id="cam-wrapper"
+            position="-15.33 0 31.081"
+            rotation="0 -206.2 0">
+            <a-camera
+              id="cam">
+              <!-- Text element for display messaging.  Hide once audio is playing. -->
+              <a-entity id="msg" position="0 -0.3 -1.5" text="align:center;
+                width:3;
+                wrapCount:100;
+                color:white;
+                value:Click window to make audio play (it will take a moment)."
+                hide-once-playing="#ambisonic">
+              </a-entity>
+              <a-entity id="title" position="0 -0.4 -1.5" text="align:center;
+                width:3;
+                wrapCount:100;
+                color:white;
+                value:Recordings by Mike Clemow and James Webb"
+                hide-once-playing="#ambisonic">
+              </a-entity>
+              <a-entity id="credit" position="0 -0.6 -1.5" text="align:center;
+                width:3;
+                wrapCount:100;
+                color:white;
+                value:'Tree' (https://skfb.ly/6VA6J) by DJMaesen CC-Attribution"
+                hide-once-playing="#ambisonic">
+              </a-entity>
+            </a-camera>
+          </a-entity>
 
         </a-scene>
       </body>
